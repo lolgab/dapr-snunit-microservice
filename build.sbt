@@ -21,7 +21,22 @@ deploy := {
     .replaceAll(".+unix:", "")
     .stripSuffix("\"")
 
-  def sendConfig(config: String) = {
+  val nativeLinkResult = (Compile / nativeLink).value
+
+  def sendConfig() = {
+    val config = s"""{
+      "applications": {
+        "app": {
+          "type": "external",
+          "executable": "$nativeLinkResult"
+        }
+      },
+      "listeners": {
+        "*:8080": {
+          "pass": "applications/app"
+        }
+      }
+    }"""
     val result = Seq(
       "curl",
       "--unix-socket",
@@ -35,21 +50,17 @@ deploy := {
 
     println(result)
   }
-  val nativeLinkResult = (Compile / nativeLink).value
-  val config = s"""{
-    "applications": {
-      "app": {
-        "type": "external",
-        "executable": "$nativeLinkResult"
-      }
-    },
-    "listeners": {
-      "*:8080": {
-        "pass": "applications/app"
-      }
-    }
-  }"""
+  def sendRestart() = {
+    val result = Seq(
+      "curl",
+      "--unix-socket",
+      unixSocketPath,
+      "http://localhost/control/applications/app/restart"
+    ).!!
 
-  sendConfig("{}")
-  sendConfig(config)
+    println(result)
+  }
+
+  sendConfig()
+  sendRestart()
 }
