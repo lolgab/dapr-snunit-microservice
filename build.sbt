@@ -2,13 +2,14 @@ scalaVersion := "3.1.2"
 
 enablePlugins(ScalaNativePlugin)
 
+val snunitVersion = "0.0.22"
+
 libraryDependencies ++= Seq(
-  "com.softwaremill.sttp.client3" %%% "core" % "3.6.2",
   "com.softwaremill.sttp.tapir" %%% "tapir-json-upickle" % "1.0.0",
   "com.lihaoyi" %%% "upickle" % "2.0.0",
-  "com.github.lolgab" %%% "snunit-async" % "0.0.20",
-  "com.github.lolgab" %%% "snunit-tapir" % "0.0.21-4-1721a5",
-  "com.github.lolgab" %%% "httpclient" % "0.0.1-SNAPSHOT"
+  "com.github.lolgab" %%% "snunit-async" % snunitVersion,
+  "com.github.lolgab" %%% "snunit-tapir" % snunitVersion,
+  "com.github.lolgab" %%% "httpclient" % "0.0.1"
 )
 
 lazy val deploy = taskKey[Unit]("deploy to NGINX Unit")

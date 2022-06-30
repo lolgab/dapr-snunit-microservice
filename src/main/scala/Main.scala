@@ -14,12 +14,21 @@ case class Foo(bar: String) derives ReadWriter
 
 def is2xx(code: Int) = code >= 200 && code < 300
 
-def addFooToStore(foo: Foo) =
+def baseReq(method: httpclient.Method) =
   httpclient.Request()
-    .method(httpclient.Method.POST)
-    .url(daprStateStore)
+    .method(method)
     .header("dapr-app-id: app")
+
+def post() =
+  baseReq(httpclient.Method.POST)
     .header("Content-Type: application/json")
+
+def get() =
+  baseReq(httpclient.Method.GET)
+
+def addFooToStore(foo: Foo) =
+  post()
+    .url(daprStateStore)
     .body(s"""[{"key": "foo_1", "value": ${write(foo)}}]""")
     .future()
     .map { res =>
@@ -28,13 +37,10 @@ def addFooToStore(foo: Foo) =
         Left(s"got ${res.body}")
       }
     }
-    
-    
+
 def getFoosFromStore(): Future[Either[String, Foo]] =
-  httpclient.Request()
-    .method(httpclient.Method.GET)
+  get()
     .url(s"$daprStateStore/foo_1")
-    .header("dapr-app-id: app")
     .future()
     .map { res =>
       if(is2xx(res.code)) Right(read[Foo](res.body))
