@@ -1,6 +1,6 @@
 package app
 
-import snunit.tapir.SNUnitInterpreterFuture.*
+import snunit.tapir.SNUnitFutureServerInterpreter.*
 import scala.concurrent.ExecutionContext.Implicits.global
 
 val store = new DaprFooStore()

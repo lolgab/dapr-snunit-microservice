@@ -2,13 +2,13 @@ scalaVersion := "3.2.0"
 
 enablePlugins(ScalaNativePlugin)
 
-val snunitVersion = "0.0.25"
+val snunitVersion = "0.1.0"
 
 libraryDependencies ++= Seq(
-  "com.softwaremill.sttp.tapir" %%% "tapir-json-upickle" % "1.1.1",
+  "com.softwaremill.sttp.tapir" %%% "tapir-json-upickle" % "1.1.2",
   "com.lihaoyi" %%% "upickle" % "2.0.0",
-  "com.github.lolgab" %%% "snunit-async" % snunitVersion,
   "com.github.lolgab" %%% "snunit-tapir" % snunitVersion,
+  "com.github.lolgab" %%% "snunit-async" % snunitVersion,
   "com.github.lolgab" %%% "httpclient" % "0.0.1"
 )
 
