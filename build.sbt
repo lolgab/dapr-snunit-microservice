@@ -3,7 +3,7 @@ scalaVersion := "3.2.0"
 enablePlugins(ScalaNativePlugin)
 enablePlugins(SNUnitPlugin)
 
-val snunitVersion = "0.1.0"
+val snunitVersion = "0.1.1"
 
 libraryDependencies ++= Seq(
   "com.softwaremill.sttp.tapir" %%% "tapir-json-upickle" % "1.1.2",
