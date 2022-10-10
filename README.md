@@ -27,7 +27,7 @@ Now that NGINX Unit is running behind the dapr sidecar you can run Sbt to deploy
 
 ```
 sbt
-> deploy
+> deployToNGINXUnit
 ```
 
 If everything goes right, you will see the following message in the Sbt console:
